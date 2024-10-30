@@ -1,3 +1,4 @@
+import LanguageContext from '../../context/LanguageContext'
 import './index.css'
 
 const landingSectionContent = {
@@ -16,9 +17,14 @@ const landingSectionContent = {
     description:
       'విండోస్ 11 ప్రశాంతమైన మరియు సృజనాత్మక స్థలాన్ని అందిస్తుంది, ఇక్కడ మీరు మీ అభిరుచులను తాజా అనుభవం ద్వారా కొనసాగించవచ్చు. పునరుజ్జీవింపబడిన ప్రారంభ మెను నుండి మీకు ఇష్టమైన వ్యక్తులు, వార్తలు, ఆటలు మరియు కంటెంట్‌తో కనెక్ట్ అవ్వడానికి కొత్త మార్గాల వరకు విండోస్ అనేది సహజంగా ఆలోచించే, వ్యక్తీకరించే మరియు సృష్టించే ప్రదేశం.',
   },
+  TA: {
+    heading: 'விண்டோஸ் 11',
+    description:
+      'விண்டோஸ் 11 ஒரு அமைதியான மற்றும் ஆக்கப்பூர்வமான இடத்தை வழங்குகிறது, அங்கு நீங்கள் ஒரு புதிய அனுபவத்தின் மூலம் உங்கள் ஆர்வத்தைத் தொடரலாம். புத்துயிர் பெற்ற தொடக்க மெனுவிலிருந்து உங்களுக்குப் பிடித்த நபர்கள், செய்திகள், கேம்கள் மற்றும் உள்ளடக்கத்துடன் இணைவதற்கான புதிய வழிகள் வரை. விண்டோஸ் என்பது இயற்கையான முறையில் சிந்திக்கவும், வெளிப்படுத்தவும், உருவாக்கவும் இடம்.',
+  },
 }
 
-const LandingSection = props => {
+const LandingSection = () => {
   const getLandingSectionData = activeLanguage => {
     switch (activeLanguage) {
       case 'EN':
@@ -27,26 +33,34 @@ const LandingSection = props => {
         return landingSectionContent.HI
       case 'TE':
         return landingSectionContent.TE
+      case 'TA':
+        return landingSectionContent.TA
       default:
         return null
     }
   }
-  const {activeLanguage} = props
-  const {heading, description} = getLandingSectionData(activeLanguage)
   return (
-    <div className="bg-container">
-      <div className="responsive-container">
-        <div className="description-container">
-          <h1 className="heading">{heading}</h1>
-          <p className="description">{description}</p>
-        </div>
-        <img
-          className="logo-white"
-          src="https://assets.ccbp.in/frontend/react-js/windows-logo-white-img.png"
-          alt="windows logo"
-        />
-      </div>
-    </div>
+    <LanguageContext.Consumer>
+      {value => {
+        const {activeLanguage} = value
+        const {heading, description} = getLandingSectionData(activeLanguage)
+        return (
+          <div className="bg-container">
+            <div className="responsive-container">
+              <div className="description-container">
+                <h1 className="heading">{heading}</h1>
+                <p className="description">{description}</p>
+              </div>
+              <img
+                className="logo-white"
+                src="https://assets.ccbp.in/frontend/react-js/windows-logo-white-img.png"
+                alt="windows logo"
+              />
+            </div>
+          </div>
+        )
+      }}
+    </LanguageContext.Consumer>
   )
 }
 
